@@ -206,8 +206,7 @@
     </script>
 
     <script>
-
-var script = document.createElement("script");
+      var script = document.createElement("script");
       script.src = "data/el_salvadorpractico_1.js";
       script.onload = function () {
         var hospitalData = json_el_salvadorpractico_1;
@@ -216,8 +215,6 @@ var script = document.createElement("script");
         script.onload = function () {
           var hospitalData = json_el_salvadorpractico_1;
           var hospitalFeatures = hospitalData.features;
-
-          // Resto del código...
 
           // Llamar a la función para actualizar la tabla con los hospitales cercanos
           updateHospitalTable(hospitalFeatures);
@@ -243,22 +240,21 @@ var script = document.createElement("script");
 
       document.head.appendChild(script);
 
-
       // Función para obtener la ubicación del usuario
       function getUserLocation() {
         if ("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(function (position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-  
+
             // Crear un marcador para la ubicación del usuario
             var userLocationMarker = L.marker([lat, lng]).addTo(map);
             userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
-  
+
             var userLocationMarker = L.marker([lat, lng]).addTo(map);
             userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
             drawCircle(lat, lng, 10);
-  
+
             // Centrar el mapa en la ubicación del usuario
             map.setView([lat, lng], 15);
           });
@@ -266,11 +262,11 @@ var script = document.createElement("script");
           alert("Geolocalización no está disponible en este navegador.");
         }
       }
-  
+
       function reloadPage() {
         location.reload();
       }
-  
+
       function drawCircle(lat, lng, radius) {
         var circle = L.circle([lat, lng], {
           color: "red",
@@ -278,15 +274,13 @@ var script = document.createElement("script");
           fillOpacity: 0.2,
           radius: radius * 200, // Convertir el radio a metros
           pane: "pane_circle", // Asignar el círculo al pane "pane_circle"
+          interactive: false,
+          pointerEvents: "none",
         }).addTo(map);
       }
-  
+
       // Llamar a la función para obtener la ubicación del usuario
       getUserLocation();
     </script>
-
-    
   </body>
-
-  
 </html>
