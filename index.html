@@ -191,45 +191,53 @@
       document.getElementsByClassName("search-button")[0].className +=
         " fa fa-binoculars";
     </script>
-  </body>
 
-  <script>
-    // Función para obtener la ubicación del usuario
-    function getUserLocation() {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          var lat = position.coords.latitude;
-          var lng = position.coords.longitude;
+    <button onclick="reloadPage()">Actualizar ubicación</button>
 
-          // Crear un marcador para la ubicación del usuario
-          var userLocationMarker = L.marker([lat, lng]).addTo(map);
-          userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
-
-          var userLocationMarker = L.marker([lat, lng]).addTo(map);
-          userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
-          drawCircle(lat, lng, 10);
-
-          // Centrar el mapa en la ubicación del usuario
-          map.setView([lat, lng], 15);
-        });
-      } else {
-        alert("Geolocalización no está disponible en este navegador.");
+    <script>
+      // Función para obtener la ubicación del usuario
+      function getUserLocation() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+  
+            // Crear un marcador para la ubicación del usuario
+            var userLocationMarker = L.marker([lat, lng]).addTo(map);
+            userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
+  
+            var userLocationMarker = L.marker([lat, lng]).addTo(map);
+            userLocationMarker.bindPopup("¡Estás aquí!").openPopup();
+            drawCircle(lat, lng, 10);
+  
+            // Centrar el mapa en la ubicación del usuario
+            map.setView([lat, lng], 15);
+          });
+        } else {
+          alert("Geolocalización no está disponible en este navegador.");
+        }
       }
-    }
+  
+      function reloadPage() {
+        location.reload();
+      }
+  
+      function drawCircle(lat, lng, radius) {
+        var circle = L.circle([lat, lng], {
+          color: "red",
+          fillColor: "#f03",
+          fillOpacity: 0.2,
+          radius: radius * 200, // Convertir el radio a metros
+          pane: "pane_circle", // Asignar el círculo al pane "pane_circle"
+        }).addTo(map);
+      }
+  
+      // Llamar a la función para obtener la ubicación del usuario
+      getUserLocation();
+    </script>
 
     
+  </body>
 
-    function drawCircle(lat, lng, radius) {
-      var circle = L.circle([lat, lng], {
-        color: "red",
-        fillColor: "#f03",
-        fillOpacity: 0.2,
-        radius: radius * 200, // Convertir el radio a metros
-        pane: "pane_circle", // Asignar el círculo al pane "pane_circle"
-      }).addTo(map);
-    }
-
-    // Llamar a la función para obtener la ubicación del usuario
-    getUserLocation();
-  </script>
+  
 </html>
