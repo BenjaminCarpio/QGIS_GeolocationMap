@@ -23,6 +23,19 @@
   </head>
   <body>
     <div id="map"></div>
+    <button onclick="reloadPage()">Actualizar ubicación</button>
+    <h1>Hospitales registrados</h1>
+    <table id="hospitalTable">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Latitud</th>
+          <th>Longitud</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
     <script src="js/qgis2web_expressions.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/multi-style-layer.js"></script>
@@ -192,9 +205,45 @@
         " fa fa-binoculars";
     </script>
 
-    <button onclick="reloadPage()">Actualizar ubicación</button>
-
     <script>
+
+var script = document.createElement("script");
+      script.src = "data/el_salvadorpractico_1.js";
+      script.onload = function () {
+        var hospitalData = json_el_salvadorpractico_1;
+        var hospitalFeatures = hospitalData.features;
+
+        script.onload = function () {
+          var hospitalData = json_el_salvadorpractico_1;
+          var hospitalFeatures = hospitalData.features;
+
+          // Resto del código...
+
+          // Llamar a la función para actualizar la tabla con los hospitales cercanos
+          updateHospitalTable(hospitalFeatures);
+        };
+
+        var tableBody = document
+          .getElementById("hospitalTable")
+          .getElementsByTagName("tbody")[0];
+
+        hospitalFeatures.forEach(function (hospital) {
+          var row = tableBody.insertRow();
+
+          var nameCell = row.insertCell(0);
+          nameCell.innerHTML = hospital.properties.Nombre;
+
+          var latCell = row.insertCell(1);
+          latCell.innerHTML = hospital.geometry.coordinates[1];
+
+          var lonCell = row.insertCell(2);
+          lonCell.innerHTML = hospital.geometry.coordinates[0];
+        });
+      };
+
+      document.head.appendChild(script);
+
+
       // Función para obtener la ubicación del usuario
       function getUserLocation() {
         if ("geolocation" in navigator) {
